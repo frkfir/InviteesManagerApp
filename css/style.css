@@ -114,7 +114,7 @@ body {
 .layer{display: none}
 .specific-event .layer.specific-event {display: block}
 .new-event .layer.new-event {display: block}
-.welcome-screen. layer.welcome-screen {display: block}
+.welcome-screen .layer.welcome-screen {display: block}
 
 .new-event h2 {
     font-size: 20px;
