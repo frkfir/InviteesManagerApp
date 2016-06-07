@@ -101,7 +101,7 @@ body {
 }
 .specific-event .layer.specific-event {
   display: block;
-  height: clac -172%;
+  height: calc(-172%);
 }
 .specific-event {
   position: relative;
