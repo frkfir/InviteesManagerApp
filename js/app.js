@@ -1,131 +1,130 @@
+(function () {
 
+  var app    = {};
+  app.events = [];
 
+  function Member(name, email, id, counter, isArrived) {
+    this.name      = name;
+    this.email     = email;
+    this.id        = id;
+    this.counter   = counter;
+    this.isArrived = isArrived;
+  }
 
+  function KEvent(name, date) {
+    this.name    = name;
+    this.date    = date;
+    this.members = [];
+  }
 
+  app.init = function () {
 
+    var _this = this;
 
-(function(){
+    return (function () {
 
-    var app = {};
-    app.events = [];
+      var createEventBtn  = document.getElementById('add-event-btn'),
+          eventNameElement,
+          eventList       = document.getElementById('eventList'),
+          eventDateElement,
+          currentEvent,
+          elemTop         = document.getElementsByClassName('top')[0],
+          elemTitle       = document.getElementsByClassName('title-container')[0],
+          elemNewEvent    = document.getElementsByClassName('new-event layer')[0],
+          elemContent     = document.getElementsByClassName('events-manager new-event specific-event')[0],
+          elemEventsTable = document.getElementsByClassName('eventTable')[0];
 
-    function Member(name, email, id, counter, isArrived){
-        this.name = name;
-        this.email = email;
-        this.id = id;
-        this.counter = counter;
-        this.isArrived = isArrived;
-    }
+      function calcTableHeight() {
+        console.log('XXX');
 
-    function KEvent(name ,date){
-        this.name = name;
-        this.date = date;
-        this.members = [];
-    }
+        var height                   = elemContent.offsetHeight - (elemTop.offsetHeight + elemTitle.offsetHeight + elemNewEvent.offsetHeight + 40);
+        elemEventsTable.style.height = height + 'px';
 
+      }
 
-    app.init = function(){
+      function buildEventElement(event) {
+        var li                 = document.createElement("li");
+        li.innerText           = event.name;
+        li.date                = event.date;
+        li.dataset['eventKey'] = app.events.length - 1;
+        return li;
+      }
 
-        var _this = this;
+      function renderEvent(event) {
+        var li = buildEventElement(event);
+        eventList.appendChild(li);
+      }
 
+      function renderEventList(container, eventsCollection) {
 
-        return (function(){
+      }
 
-            var createEventBtn = document.getElementById('add-event-btn'),
-                eventNameElement,
-                eventList = document.getElementById('eventList'),
-                eventDateElement,
-                currentEvent;
+      function initEventLayer(event) {
 
+      }
 
+      function addNewEvent(e) {
 
-            function buildEventElement(event){
-                var li = document.createElement("li");
-                li.innerText = event.name;
-                li.date = event.date;
-                li.dataset['eventKey'] = app.events.length-1;
-                return li;
-            }
+        if (!eventNameElement) {
+          eventNameElement = document.getElementById('exampleInputEmail1');
+        }
+        if (!eventDateElement) {
+          eventDateElement = document.getElementById('exampleInputPassword1');
+        }
 
+        var event = {},
+            eventList,
+            li;
 
-            function renderEvent(event){
-                var li = buildEventElement(event);
-                eventList.appendChild(li);
-            }
+        event = new KEvent(eventNameElement.value, eventDateElement.value);
 
-            function renderEventList(container, eventsCollection){
+        this.events.push(event);
+        renderEvent(event);
+      }
 
-            }
+      function changeLayer(layer, beforeLayerChange, afterLayerChange) {
+        // change layer (class name)
+        // run beforeLayerChange
+        // run afterLayerChange
 
-            function initEventLayer(event){
+        beforeLayerChange();
+        // change layer class
+        afterLayerChange();
+      }
 
+      function buildMemberTable(members) {
 
-            }
+      }
 
+      document.getElementById('eventList').addEventListener('click', function (e) {
+        var target = e.target;
+        var event  = app.events[target.dataset.eventKey];
 
-            function addNewEvent(e){
+        changeLayer('event', function () {
+          currentEvent = event;
 
-                if(!eventNameElement){
-                    eventNameElement = document.getElementById('exampleInputEmail1');
-                }
-                if(!eventDateElement){
-                    eventDateElement = document.getElementById('exampleInputPassword1');
-                }
+          console.log('beforeLayerChange');
+        }, function () {
+          console.log('afterLayerChange');
+        });
 
-                var event = {},
-                    eventList,
-                    li;
+      });
 
-                event = new KEvent( eventNameElement.value,  eventDateElement.value);
+      createEventBtn.addEventListener('click', addNewEvent.bind(_this));
+      window.addEventListener('resize', calcTableHeight.bind(_this));
 
-                this.events.push(event);
-                renderEvent(event);
-            }
+      calcTableHeight();
 
-            function changeLayer(layer, beforeLayerChange, afterLayerChange){
-                // change layer (class name)
-                // run beforeLayerChange
-                // run afterLayerChange
+      return {}
 
-                beforeLayerChange();
-                // change layer class
-                afterLayerChange();
-            }
+    })();
+  };
 
-            function buildMemberTable(members){
+  document.addEventListener('DOMContentLoaded', function () {
 
-            }
+    app.init();
 
-            document.getElementById('eventList').addEventListener('click',function(e){
-                var target = e.target;
-                var event = app.events[target.dataset.eventKey];
-
-                changeLayer('event',function(){
-                    currentEvent = event;
-
-                    console.log('beforeLayerChange');
-                },function(){
-                    console.log('afterLayerChange');
-                });
-
-
-            });
-
-            createEventBtn.addEventListener('click',addNewEvent.bind(_this));
-
-            return {}
-
-        })();
-    };
-
-
-    document.addEventListener('DOMContentLoaded',function(){
-
-        app.init();
-
-    });
-
-
+  });
 
 })();
 
